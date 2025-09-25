@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 
 /**
  * Главное окно приложения "Каталог компьютерной техники".
+ *
+ * @Author: N.S. Pavlovskiy
+ *
  */
 public class MainWindow extends JFrame {
     private EquipmentCatalog catalog;
