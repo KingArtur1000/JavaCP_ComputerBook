@@ -64,11 +64,9 @@ public class MainWindow extends JFrame {
         tableModel = new DefaultTableModel(columns, 0);
         table = new JTable(tableModel);
 
-
         // Добавляем возможность сортировки по столбцам
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
         table.setRowSorter(sorter);
-
 
         JScrollPane scrollPane = new JScrollPane(table);
 
