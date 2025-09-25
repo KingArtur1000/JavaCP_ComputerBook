@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 /**
  * Главное окно приложения "Каталог компьютерной техники".
@@ -125,6 +126,10 @@ public class MainWindow extends JFrame {
 
     private void onSave() {
         JFileChooser chooser = new JFileChooser();
+
+        // Задаём имя файла по умолчанию
+        chooser.setSelectedFile(new File("catalog.csv"));
+
         if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 FileManager.saveCatalog(catalog, chooser.getSelectedFile());
