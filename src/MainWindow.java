@@ -3,6 +3,7 @@ import UI.EquipmentFormDialog;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -62,6 +63,13 @@ public class MainWindow extends JFrame {
         String[] columns = {"ID", "Название", "Производитель", "Цена", "Год", "Описание"};
         tableModel = new DefaultTableModel(columns, 0);
         table = new JTable(tableModel);
+
+
+        // Добавляем возможность сортировки по столбцам
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
+        table.setRowSorter(sorter);
+
+
         JScrollPane scrollPane = new JScrollPane(table);
 
         JButton addButton = new JButton("Добавить");
