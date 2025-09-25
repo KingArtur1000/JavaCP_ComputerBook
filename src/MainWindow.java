@@ -5,7 +5,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
 
 /**
  * Главное окно приложения "Каталог компьютерной техники".
@@ -26,18 +25,35 @@ public class MainWindow extends JFrame {
     }
 
     private void initUI() {
+        // Создание объектов меню
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Файл");
+        JMenu whatMenu = new JMenu("?");
 
+        // Меню вкладки -Файл-
         JMenuItem saveItem = new JMenuItem("Сохранить");
         JMenuItem loadItem = new JMenuItem("Загрузить");
 
+        // Меню вкладки -?-
+        JMenuItem aboutAuthorItem = new JMenuItem("Об авторе");
+
+        // Привязываемся к событиям
         saveItem.addActionListener(e -> onSave());
         loadItem.addActionListener(e -> onLoad());
+        aboutAuthorItem.addActionListener(e -> onClickAboutAuthorItem());
 
+        // Привязываем элементы к вкладке -Файл-
         fileMenu.add(saveItem);
         fileMenu.add(loadItem);
+
+        // Привязываем элементы к вкладке -?-
+        whatMenu.add(aboutAuthorItem);
+
+        // Привязываем вкладки к панели меню
         menuBar.add(fileMenu);
+        menuBar.add(whatMenu);
+
+        // Назначаем панель меню
         setJMenuBar(menuBar);
 
         String[] columns = {"ID", "Название", "Производитель", "Цена", "Год", "Описание"};
@@ -124,6 +140,11 @@ public class MainWindow extends JFrame {
                 JOptionPane.showMessageDialog(this, "Ошибка загрузки: " + ex.getMessage());
             }
         }
+    }
+
+
+    public void onClickAboutAuthorItem() {
+        JOptionPane.showMessageDialog(this, "Автор: Павловский Никита Сергеевич - студент БНТУ :)");
     }
 
     public static void main(String[] args) {
