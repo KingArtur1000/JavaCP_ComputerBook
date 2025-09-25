@@ -13,4 +13,11 @@ public class NetworkDevice extends Equipment {
         this.protocol = protocol;
         this.speedMbps = speedMbps;
     }
+
+    public String getProtocol() { return protocol; }
+    public int getSpeedMbps() { return speedMbps; }
+
+    public void setProtocol(String protocol) { this.protocol = protocol; }
+    public void setSpeedMbps(int speedMbps) {this.speedMbps = speedMbps; }
+
 }

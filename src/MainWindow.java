@@ -1,4 +1,4 @@
-import Equipment.Equipment;
+import Equipment.*;
 import UI.EquipmentFormDialog;
 
 import javax.swing.*;
@@ -31,37 +31,16 @@ public class MainWindow extends JFrame {
 
     private void initUI() {
         // Создание объектов меню
-        JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("Файл");
-        JMenu whatMenu = new JMenu("?");
-
-        // Меню вкладки -Файл-
-        JMenuItem saveItem = new JMenuItem("Сохранить");
-        JMenuItem loadItem = new JMenuItem("Загрузить");
-
-        // Меню вкладки -?-
-        JMenuItem aboutAuthorItem = new JMenuItem("Об авторе");
-
-        // Привязываемся к событиям
-        saveItem.addActionListener(e -> onSave());
-        loadItem.addActionListener(e -> onLoad());
-        aboutAuthorItem.addActionListener(e -> onClickAboutAuthorItem());
-
-        // Привязываем элементы к вкладке -Файл-
-        fileMenu.add(saveItem);
-        fileMenu.add(loadItem);
-
-        // Привязываем элементы к вкладке -?-
-        whatMenu.add(aboutAuthorItem);
-
-        // Привязываем вкладки к панели меню
-        menuBar.add(fileMenu);
-        menuBar.add(whatMenu);
+        JMenuBar menuBar = getBar();
 
         // Назначаем панель меню
         setJMenuBar(menuBar);
 
-        String[] columns = {"ID", "Название", "Производитель", "Цена", "Год", "Описание"};
+        String[] columns = {
+                "ID", "Название", "Производитель", "Цена", "Год", "Описание",
+                "Тип", "CPU", "RAM", "Storage", "DeviceType", "Protocol", "Speed"
+        };
+
         tableModel = new DefaultTableModel(columns, 0);
         table = new JTable(tableModel);
 
@@ -88,19 +67,67 @@ public class MainWindow extends JFrame {
         refreshTable();
     }
 
+    private JMenuBar getBar() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("Файл");
+        JMenu whatMenu = new JMenu("?");
+
+        // Меню вкладки -Файл-
+        JMenuItem saveItem = new JMenuItem("Сохранить");
+        JMenuItem loadItem = new JMenuItem("Загрузить");
+
+        // Меню вкладки -?-
+        JMenuItem aboutAuthorItem = new JMenuItem("Об авторе");
+
+        // Привязываемся к событиям
+        saveItem.addActionListener(e -> onSave());
+        loadItem.addActionListener(e -> onLoad());
+        aboutAuthorItem.addActionListener(e -> onClickAboutAuthorItem());
+
+        // Привязываем элементы к вкладке -Файл-
+        fileMenu.add(saveItem);
+        fileMenu.add(loadItem);
+
+        // Привязываем элементы к вкладке -?-
+        whatMenu.add(aboutAuthorItem);
+
+        // Привязываем вкладки к панели меню
+        menuBar.add(fileMenu);
+        menuBar.add(whatMenu);
+        return menuBar;
+    }
+
     private void refreshTable() {
         tableModel.setRowCount(0);
         for (Equipment eq : catalog.getAll()) {
-            tableModel.addRow(new Object[]{
-                    eq.getId(),
-                    eq.getName(),
-                    eq.getManufacturer(),
-                    eq.getPrice(),
-                    eq.getYear(),
-                    eq.getDescription()
-            });
+            Object[] row = new Object[13];
+            row[0] = eq.getId();
+            row[1] = eq.getName();
+            row[2] = eq.getManufacturer();
+            row[3] = eq.getPrice();
+            row[4] = eq.getYear();
+            row[5] = eq.getDescription();
+            row[6] = eq.getClass().getSimpleName(); // Computer / Peripheral / NetworkDevice
+
+            switch (eq) {
+                case Computer c -> {
+                    row[7] = c.getCpu();
+                    row[8] = c.getRam();
+                    row[9] = c.getStorage();
+                }
+                case Peripheral p -> row[10] = p.getType();
+                case NetworkDevice n -> {
+                    row[11] = n.getProtocol();
+                    row[12] = n.getSpeedMbps();
+                }
+                default -> {
+                }
+            }
+
+            tableModel.addRow(row);
         }
     }
+
 
     private void onAdd(ActionEvent e) {
         EquipmentFormDialog dialog = new EquipmentFormDialog(this);

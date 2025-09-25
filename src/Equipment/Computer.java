@@ -15,4 +15,12 @@ public class Computer extends Equipment {
         this.ram = ram;
         this.storage = storage;
     }
+
+    public String getCpu() { return cpu; }
+    public int getRam() { return ram; }
+    public int getStorage() { return storage; }
+
+    public void setCpu(String cpu) { this.cpu = cpu; }
+    public void setRam(int ram) { this.ram = ram; }
+    public void setStorage(int storage) { this.storage = storage; }
 }
