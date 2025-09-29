@@ -8,9 +8,6 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Диалог для добавления оборудования.
- */
 public class EquipmentFormDialog extends JDialog {
     private JTextField nameField, manufacturerField, priceField, yearField, descriptionField;
     private JComboBox<String> typeCombo;
@@ -21,84 +18,95 @@ public class EquipmentFormDialog extends JDialog {
     public EquipmentFormDialog(JFrame parent) {
         super(parent, "Добавить оборудование", true);
 
-        // Системный стиль (Windows/Mac/Linux)
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) {}
 
-        setSize(500, 450);
+        // Параметры окна с добавлением оборудования
+        setSize(400, 500);
         setLocationRelativeTo(parent);
         initForm();
     }
 
     private void initForm() {
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
-        formPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // отступы
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+
+        int row = 0;
 
         // Заголовок
         JLabel title = new JLabel("Добавить оборудование", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 18));
-        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
-        formPanel.add(title);
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
+        formPanel.add(title, gbc);
+        row++;
 
         // Тип устройства
-        JPanel typePanel = new JPanel(new GridLayout(1, 2, 5, 5));
-        typePanel.add(new JLabel("Тип устройства:"));
+        gbc.gridwidth = 1;
+        gbc.gridx = 0; gbc.gridy = row;
+        formPanel.add(new JLabel("Тип устройства:"), gbc);
+
         typeCombo = new JComboBox<>(new String[]{"Computer", "Peripheral", "NetworkDevice"});
         typeCombo.addActionListener(e -> updateDynamicFields());
-        typePanel.add(typeCombo);
-        formPanel.add(typePanel);
+        gbc.gridx = 1;
+        formPanel.add(typeCombo, gbc);
+        row++;
 
         // Базовые поля
-        formPanel.add(labeledField("Название:", nameField = new JTextField(), "Введите название устройства"));
-        formPanel.add(labeledField("Производитель:", manufacturerField = new JTextField(), "Введите производителя"));
-        formPanel.add(labeledField("Цена:", priceField = new JTextField(), "Например: 499.99"));
-        formPanel.add(labeledField("Год:", yearField = new JTextField(), "Например: 2024"));
-        formPanel.add(labeledField("Описание:", descriptionField = new JTextField(), "Краткое описание"));
+        nameField = addLabeledField(formPanel, gbc, row++, "Название:");
+        manufacturerField = addLabeledField(formPanel, gbc, row++, "Производитель:");
+        priceField = addLabeledField(formPanel, gbc, row++, "Цена:");
+        yearField = addLabeledField(formPanel, gbc, row++, "Год:");
+        descriptionField = addLabeledField(formPanel, gbc, row++, "Описание:");
 
         // Динамическая панель
-        dynamicPanel = new JPanel(new GridLayout(0, 2, 5, 5));
-        formPanel.add(dynamicPanel);
+        dynamicPanel = new JPanel(new GridBagLayout());
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
+        formPanel.add(dynamicPanel, gbc);
+        row++;
 
         // Кнопки
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
         JButton okButton = new JButton("OK");
         JButton cancelButton = new JButton("Отмена");
-
-        // Стили кнопок
-        styleButton(okButton, new Color(60, 179, 113));   // зелёный
-        styleButton(cancelButton, new Color(220, 20, 60)); // красный
-
+        styleButton(okButton, new Color(60, 179, 113));
+        styleButton(cancelButton, new Color(220, 20, 60));
         okButton.addActionListener(this::onOk);
         cancelButton.addActionListener(e -> dispose());
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
-        formPanel.add(buttonPanel);
+
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
+        formPanel.add(buttonPanel, gbc);
 
         add(new JScrollPane(formPanel));
         updateDynamicFields();
     }
 
-    /** Удобный метод для подписанных полей с подсказкой */
-    private JPanel labeledField(String label, JTextField field, String tooltip) {
-        JPanel panel = new JPanel(new BorderLayout(5, 5));
+    private JTextField addLabeledField(JPanel panel, GridBagConstraints gbc, int row, String label) {
         JLabel lbl = new JLabel(label);
-        lbl.setPreferredSize(new Dimension(120, 25)); // фикс ширины для выравнивания
-        panel.add(lbl, BorderLayout.WEST);
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 1; gbc.weightx = 0;
+        panel.add(lbl, gbc);
 
-        field.setToolTipText(tooltip);
-        styleTextField(field); // общий стиль
-        panel.add(field, BorderLayout.CENTER);
+        JTextField field = new JTextField();
+        styleTextField(field);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        panel.add(field, gbc);
 
-        panel.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0)); // добавляем вертикальный зазор
-        return panel;
+        return field;
     }
 
+    private void styleTextField(JTextField field) {
+        field.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY, 1, true),
+                BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
+        field.setFont(new Font("Arial", Font.PLAIN, 13));
+    }
 
-
-
-    /** Красивые кнопки */
     private void styleButton(JButton button, Color bg) {
         button.setBackground(bg);
         button.setForeground(Color.WHITE);
@@ -107,36 +115,48 @@ public class EquipmentFormDialog extends JDialog {
         button.setPreferredSize(new Dimension(100, 30));
     }
 
-    /** Обновление динамических полей */
     private void updateDynamicFields() {
         dynamicPanel.removeAll();
         extraFields.clear();
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+
+        int row = 0;
         String selectedType = (String) typeCombo.getSelectedItem();
+
         if ("Computer".equals(selectedType)) {
-            addDynamicField("CPU:");
-            addDynamicField("RAM (GB):");
-            addDynamicField("Storage (GB):");
+            addDynamicField("CPU:", row++, gbc);
+            addDynamicField("RAM (GB):", row++, gbc);
+            addDynamicField("Storage (GB):", row++, gbc);
         } else if ("Peripheral".equals(selectedType)) {
-            addDynamicField("Тип устройства:");
+            addDynamicField("Тип устройства:", row++, gbc);
         } else if ("NetworkDevice".equals(selectedType)) {
-            addDynamicField("Протокол:");
-            addDynamicField("Скорость (Mbps):");
+            addDynamicField("Протокол:", row++, gbc);
+            addDynamicField("Скорость (Mbps):", row++, gbc);
         }
 
         dynamicPanel.revalidate();
         dynamicPanel.repaint();
-        pack();
+
+        // Полностью игнорирует setSize() и подгоняет окно под минимальные размеры всех вложенных компонентов
+        //pack();
     }
 
-    private void addDynamicField(String label) {
-        dynamicPanel.add(new JLabel(label));
+    private void addDynamicField(String label, int row, GridBagConstraints gbc) {
+        JLabel lbl = new JLabel(label);
+        gbc.gridx = 0; gbc.gridy = row; gbc.weightx = 0;
+        dynamicPanel.add(lbl, gbc);
+
         JTextField field = new JTextField();
-        styleTextField(field); // 🔑 одинаковый стиль
-        dynamicPanel.add(field);
+        styleTextField(field);
+        gbc.gridx = 1; gbc.weightx = 1.0;
+        dynamicPanel.add(field, gbc);
+
         extraFields.add(field);
     }
-
 
     private void onOk(ActionEvent e) {
         try {
@@ -172,18 +192,6 @@ public class EquipmentFormDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "Ошибка ввода: " + ex.getMessage());
         }
     }
-
-    private void styleTextField(JTextField field) {
-        field.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 1, true),
-                BorderFactory.createEmptyBorder(5, 8, 5, 8)
-        ));
-        field.setFont(new Font("Arial", Font.PLAIN, 13));
-        field.setPreferredSize(new Dimension(250, 25)); // 🔑 одинаковый размер
-        field.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25)); // чтобы не растягивалось по высоте
-    }
-
-
 
     public Equipment getResult() {
         return result;
