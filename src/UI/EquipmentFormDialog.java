@@ -51,6 +51,11 @@ public class EquipmentFormDialog extends JDialog {
 
         typeCombo = new JComboBox<>(new String[]{"Computer", "Peripheral", "NetworkDevice"});
         typeCombo.addActionListener(e -> updateDynamicFields());
+        typeCombo.setFont(new Font("Arial", Font.PLAIN, 14));
+        typeCombo.setBackground(Color.WHITE);
+        typeCombo.setForeground(Color.DARK_GRAY);
+        typeCombo.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1, true));
+        typeCombo.setPreferredSize(new Dimension(200, 28));
         gbc.gridx = 1;
         formPanel.add(typeCombo, gbc);
         row++;
@@ -127,17 +132,25 @@ public class EquipmentFormDialog extends JDialog {
         int row = 0;
         String selectedType = (String) typeCombo.getSelectedItem();
 
-        if ("Computer".equals(selectedType)) {
-            addDynamicField("CPU:", row++, gbc);
-            addDynamicField("RAM (GB):", row++, gbc);
-            addDynamicField("Storage (GB):", row++, gbc);
-        } else if ("Peripheral".equals(selectedType)) {
-            addDynamicField("Тип устройства:", row++, gbc);
-        } else if ("NetworkDevice".equals(selectedType)) {
-            addDynamicField("Протокол:", row++, gbc);
-            addDynamicField("Скорость (Mbps):", row++, gbc);
+        switch (selectedType) {
+            case "Computer":
+                addDynamicField("CPU:", row++, gbc);
+                addDynamicField("RAM (GB):", row++, gbc);
+                addDynamicField("Storage (GB):", row++, gbc);
+                break;
+            case "Peripheral":
+                addDynamicField("Тип устройства:", row++, gbc);
+                break;
+            case "NetworkDevice":
+                addDynamicField("Протокол:", row++, gbc);
+                addDynamicField("Скорость (Mbps):", row++, gbc);
+                break;
+            case null, default:
+                break;
         }
+        
 
+        // Перерисовываем форму
         dynamicPanel.revalidate();
         dynamicPanel.repaint();
 
