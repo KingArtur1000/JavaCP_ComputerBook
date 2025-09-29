@@ -12,7 +12,7 @@ public class EquipmentFormDialog extends JDialog {
     private JTextField nameField, manufacturerField, priceField, yearField, descriptionField;
     private JComboBox<String> typeCombo;
     private JPanel dynamicPanel;
-    private List<JTextField> extraFields = new ArrayList<>();
+    private final List<JTextField> extraFields = new ArrayList<>();
     private Equipment result;
 
     public EquipmentFormDialog(JFrame parent) {
@@ -33,7 +33,7 @@ public class EquipmentFormDialog extends JDialog {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5); // отступы
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
+        gbc.weightx = 1.0;  // разрешаем растягивание
 
         int row = 0;
 
@@ -45,8 +45,9 @@ public class EquipmentFormDialog extends JDialog {
         row++;
 
         // Тип устройства
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 1;  // Сколько ОДИН КОМПОНЕНТ (НЕ сколько, в строке условно ячеек) должен занимать "места" в строке
         gbc.gridx = 0; gbc.gridy = row;
+        gbc.weightx = 0.15; // Аналог * в ColumnStraits в WPF (сколько места должен занимать столбец)
         formPanel.add(new JLabel("Тип устройства:"), gbc);
 
         typeCombo = new JComboBox<>(new String[]{"Computer", "Peripheral", "NetworkDevice"});
@@ -69,6 +70,7 @@ public class EquipmentFormDialog extends JDialog {
 
         // Динамическая панель
         dynamicPanel = new JPanel(new GridBagLayout());
+        gbc.insets = new Insets(0, 0, 0, 0); // отступы
         gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
         formPanel.add(dynamicPanel, gbc);
         row++;
@@ -93,7 +95,7 @@ public class EquipmentFormDialog extends JDialog {
 
     private JTextField addLabeledField(JPanel panel, GridBagConstraints gbc, int row, String label) {
         JLabel lbl = new JLabel(label);
-        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 1; gbc.weightx = 0;
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 1; gbc.weightx = 0.15;
         panel.add(lbl, gbc);
 
         JTextField field = new JTextField();
@@ -160,7 +162,7 @@ public class EquipmentFormDialog extends JDialog {
 
     private void addDynamicField(String label, int row, GridBagConstraints gbc) {
         JLabel lbl = new JLabel(label);
-        gbc.gridx = 0; gbc.gridy = row; gbc.weightx = 0;
+        gbc.gridx = 0; gbc.gridy = row; gbc.weightx = 0.15;
         dynamicPanel.add(lbl, gbc);
 
         JTextField field = new JTextField();
@@ -190,7 +192,7 @@ public class EquipmentFormDialog extends JDialog {
                     result = new Computer(id, name, manufacturer, price, year, description, cpu, ram, storage);
                 }
                 case "Peripheral" -> {
-                    String type = extraFields.get(0).getText().trim();
+                    String type = extraFields.getFirst().getText().trim();
                     result = new Peripheral(id, name, manufacturer, price, year, description, type);
                 }
                 case "NetworkDevice" -> {
@@ -198,6 +200,8 @@ public class EquipmentFormDialog extends JDialog {
                     int speed = Integer.parseInt(extraFields.get(1).getText().trim());
                     result = new NetworkDevice(id, name, manufacturer, price, year, description, protocol, speed);
                 }
+                case null -> {}
+                default -> throw new IllegalStateException("Unexpected value: " + selectedType);
             }
 
             dispose();
