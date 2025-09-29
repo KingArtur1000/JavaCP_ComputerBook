@@ -33,20 +33,22 @@ public class EquipmentFormDialog extends JDialog {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5); // отступы
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;  // разрешаем растягивание
+        gbc.weightx = 1.0;
 
         int row = 0;
 
         // Заголовок
         JLabel title = new JLabel("Добавить оборудование", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 18));
+
+        // в Swing GridBagConstraints по умолчанию ВСЕГДА сетка 2*2 (даже если нигде ранее не указывали gridx=1)
         gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
         formPanel.add(title, gbc);
         row++;
 
         // Тип устройства
-        gbc.gridwidth = 1;  // Сколько ОДИН КОМПОНЕНТ (НЕ сколько, в строке условно ячеек) должен занимать "места" в строке
-        gbc.gridx = 0; gbc.gridy = row;
+        gbc.gridwidth = 1;  // Аналог ColumnSpan в WPF
+        gbc.gridx = 0; gbc.gridy = row; // Положение ячейки в сетке (Аналог Grid.Column, Grid.Row)
         gbc.weightx = 0.15; // Аналог * в ColumnStraits в WPF (сколько места должен занимать столбец)
         formPanel.add(new JLabel("Тип устройства:"), gbc);
 
@@ -127,7 +129,7 @@ public class EquipmentFormDialog extends JDialog {
         extraFields.clear();
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(0, 0, 0, 0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
 
@@ -163,11 +165,13 @@ public class EquipmentFormDialog extends JDialog {
     private void addDynamicField(String label, int row, GridBagConstraints gbc) {
         JLabel lbl = new JLabel(label);
         gbc.gridx = 0; gbc.gridy = row; gbc.weightx = 0.15;
+        gbc.insets = new Insets(5, 5, 5, 0);
         dynamicPanel.add(lbl, gbc);
 
         JTextField field = new JTextField();
         styleTextField(field);
         gbc.gridx = 1; gbc.weightx = 1.0;
+        gbc.insets = new Insets(5, 0, 5, 5);
         dynamicPanel.add(field, gbc);
 
         extraFields.add(field);
