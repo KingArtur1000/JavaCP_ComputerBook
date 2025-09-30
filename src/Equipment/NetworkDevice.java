@@ -21,6 +21,11 @@ public class NetworkDevice extends Equipment {
     public void setSpeedMbps(int speedMbps) {this.speedMbps = speedMbps; }
 
     @Override
+    protected EQ_TYPES getType() {
+        return EQ_TYPES.NETWORK_DEVICE;
+    };
+
+    @Override
     public String serialize() {
         return super.serialize() + DELIMITER +
                 protocol + DELIMITER +

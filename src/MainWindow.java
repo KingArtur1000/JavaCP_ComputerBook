@@ -115,7 +115,7 @@ public class MainWindow extends JFrame {
                     row[7] = c.getRam();
                     row[8] = c.getStorage();
                 }
-                case Peripheral p -> row[9] = p.getType();
+                case Peripheral p -> row[9] = p.getPeripheralType();
                 case NetworkDevice n -> {
                     row[10] = n.getProtocol();
                     row[11] = n.getSpeedMbps();

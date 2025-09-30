@@ -10,6 +10,14 @@ public abstract class Equipment {
     protected int year;
     protected String description;
 
+
+    protected enum EQ_TYPES {
+        COMPUTER,
+        PERIPHERAL,
+        NETWORK_DEVICE
+    };
+
+
     protected static final String DELIMITER = ";";
 
     public Equipment(String name, String manufacturer, double price, int year, String description) {
@@ -30,6 +38,8 @@ public abstract class Equipment {
     public String toString() {
         return name + " (" + manufacturer + ")";
     }
+
+    protected abstract EQ_TYPES getType();
 
     public String serialize() {
         return name + DELIMITER +

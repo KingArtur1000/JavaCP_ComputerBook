@@ -12,8 +12,13 @@ public class Peripheral extends Equipment {
         this.type = type;
     }
 
-    public String getType() { return type; }
+    public String getPeripheralType() { return type; }
     public void setType(String type) { this.type = type; }
+
+    @Override
+    protected EQ_TYPES getType() {
+        return EQ_TYPES.PERIPHERAL;
+    };
 
     @Override
     public String serialize() {

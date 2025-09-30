@@ -25,6 +25,11 @@ public class Computer extends Equipment {
     public void setStorage(int storage) { this.storage = storage; }
 
     @Override
+    protected EQ_TYPES getType() {
+        return EQ_TYPES.COMPUTER;
+    };
+
+    @Override
     public String serialize() {
         return super.serialize() + DELIMITER +
                 cpu + DELIMITER +
