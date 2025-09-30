@@ -168,12 +168,24 @@ public class MainWindow extends JFrame {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
             String name = (String) tableModel.getValueAt(selectedRow, 1);
-            catalog.removeEquipmentByName(name);
-            refreshTable();
+
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Вы действительно хотите удалить \"" + name + "\"?",
+                    "Подтверждение удаления",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                catalog.removeEquipmentByName(name);
+                refreshTable();
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Выберите строку для удаления");
         }
     }
+
 
     private void onSave() {
         JFileChooser chooser = new JFileChooser();
@@ -206,7 +218,6 @@ public class MainWindow extends JFrame {
             }
         }
     }
-
 
     public void onClickAboutAuthorItem() {
         JOptionPane.showMessageDialog(this, "Автор: Павловский Никита Сергеевич - студент БНТУ :)");
