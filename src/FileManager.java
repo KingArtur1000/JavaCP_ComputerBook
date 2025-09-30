@@ -34,8 +34,7 @@ public class FileManager {
     }
 
     private static String serialize(Equipment eq) {
-        return eq.getId() + DELIMITER +
-                eq.getName() + DELIMITER +
+        return  eq.getName() + DELIMITER +
                 eq.getManufacturer() + DELIMITER +
                 eq.getPrice() + DELIMITER +
                 eq.getYear() + DELIMITER +
@@ -51,7 +50,7 @@ public class FileManager {
             double price = Double.parseDouble(parts[3]);
             int year = Integer.parseInt(parts[4]);
             String description = parts[5];
-            return new Peripheral(id, name, manufacturer, price, year, description, "Generic");
+            return new Peripheral(name, manufacturer, price, year, description, "Generic");
         } catch (Exception e) {
             return null;
         }

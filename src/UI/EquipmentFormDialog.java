@@ -190,7 +190,6 @@ public class EquipmentFormDialog extends JDialog {
 
     private void onOk(ActionEvent e) {
         try {
-            int id = (int) (Math.random() * 10000);
             String name = nameField.getText().trim();
             String manufacturer = manufacturerField.getText().trim();
             double price = Double.parseDouble(priceField.getText().trim());
@@ -204,16 +203,16 @@ public class EquipmentFormDialog extends JDialog {
                     String cpu = extraFields.get(0).getText().trim();
                     int ram = Integer.parseInt(extraFields.get(1).getText().trim());
                     int storage = Integer.parseInt(extraFields.get(2).getText().trim());
-                    result = new Computer(id, name, manufacturer, price, year, description, cpu, ram, storage);
+                    result = new Computer(name, manufacturer, price, year, description, cpu, ram, storage);
                 }
                 case typePeripheralString -> {
                     String type = extraFields.getFirst().getText().trim();
-                    result = new Peripheral(id, name, manufacturer, price, year, description, type);
+                    result = new Peripheral(name, manufacturer, price, year, description, type);
                 }
                 case typeNetworkDeviceString -> {
                     String protocol = extraFields.get(0).getText().trim();
                     int speed = Integer.parseInt(extraFields.get(1).getText().trim());
-                    result = new NetworkDevice(id, name, manufacturer, price, year, description, protocol, speed);
+                    result = new NetworkDevice(name, manufacturer, price, year, description, protocol, speed);
                 }
                 case null -> {}
                 default -> throw new IllegalStateException("Unexpected value: " + selectedType);

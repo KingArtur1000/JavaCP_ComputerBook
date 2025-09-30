@@ -7,9 +7,9 @@ public class NetworkDevice extends Equipment {
     private String protocol;
     private int speedMbps;
 
-    public NetworkDevice(int id, String name, String manufacturer, double price, int year, String description,
+    public NetworkDevice(String name, String manufacturer, double price, int year, String description,
                          String protocol, int speedMbps) {
-        super(id, name, manufacturer, price, year, description);
+        super(name, manufacturer, price, year, description);
         this.protocol = protocol;
         this.speedMbps = speedMbps;
     }

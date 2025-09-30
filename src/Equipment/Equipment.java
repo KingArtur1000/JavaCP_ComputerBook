@@ -4,15 +4,13 @@ package Equipment;
  * Базовый класс для любого оборудования.
  */
 public abstract class Equipment {
-    protected int id;
     protected String name;
     protected String manufacturer;
     protected double price;
     protected int year;
     protected String description;
 
-    public Equipment(int id, String name, String manufacturer, double price, int year, String description) {
-        this.id = id;
+    public Equipment(String name, String manufacturer, double price, int year, String description) {
         this.name = name;
         this.manufacturer = manufacturer;
         this.price = price;
@@ -20,7 +18,6 @@ public abstract class Equipment {
         this.description = description;
     }
 
-    public int getId() { return id; }
     public String getName() { return name; }
     public String getManufacturer() { return manufacturer; }
     public double getPrice() { return price; }

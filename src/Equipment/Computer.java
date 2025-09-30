@@ -8,9 +8,9 @@ public class Computer extends Equipment {
     private int ram;
     private int storage;
 
-    public Computer(int id, String name, String manufacturer, double price, int year, String description,
+    public Computer(String name, String manufacturer, double price, int year, String description,
                     String cpu, int ram, int storage) {
-        super(id, name, manufacturer, price, year, description);
+        super(name, manufacturer, price, year, description);
         this.cpu = cpu;
         this.ram = ram;
         this.storage = storage;
