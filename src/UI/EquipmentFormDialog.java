@@ -104,6 +104,7 @@ public class EquipmentFormDialog extends JDialog {
 
     private JTextField addLabeledField(JPanel panel, GridBagConstraints gbc, int row, String label) {
         JLabel lbl = new JLabel(label);
+        lbl.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 1; gbc.weightx = 0.15;
         panel.add(lbl, gbc);
 
@@ -173,6 +174,7 @@ public class EquipmentFormDialog extends JDialog {
 
     private void addDynamicField(String label, int row, GridBagConstraints gbc) {
         JLabel lbl = new JLabel(label);
+        lbl.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 0; gbc.gridy = row; gbc.weightx = 0.15;
         gbc.insets = new Insets(5, 5, 5, 0);
         dynamicPanel.add(lbl, gbc);
