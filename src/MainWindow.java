@@ -1,5 +1,6 @@
 import Equipment.*;
 import UI.EquipmentFormDialog;
+import UI.FontSizeChangerFormDialog;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -47,6 +48,11 @@ public class MainWindow extends JFrame {
         tableModel = new DefaultTableModel(columns, 0);
         table = new JTable(tableModel);
 
+        // Шрифт по умолчанию для заголовков в таблице
+        table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
+        table.setFont(new Font("Arial", Font.PLAIN, 16));
+
+
         // Добавляем возможность сортировки по столбцам
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
         table.setRowSorter(sorter);
@@ -73,11 +79,15 @@ public class MainWindow extends JFrame {
     private JMenuBar getBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Файл");
+        JMenu settingsMenu = new JMenu("Настройки");
         JMenu whatMenu = new JMenu("?");
 
         // Меню вкладки -Файл-
         JMenuItem saveItem = new JMenuItem("Сохранить");
         JMenuItem loadItem = new JMenuItem("Загрузить");
+
+        // Меню вкладки -Настройки-
+        JMenuItem fontSizeItem = new JMenuItem("Размер шрифта");
 
         // Меню вкладки -?-
         JMenuItem aboutAuthorItem = new JMenuItem("Об авторе");
@@ -86,16 +96,24 @@ public class MainWindow extends JFrame {
         saveItem.addActionListener(e -> onSave());
         loadItem.addActionListener(e -> onLoad());
         aboutAuthorItem.addActionListener(e -> onClickAboutAuthorItem());
+        fontSizeItem.addActionListener(e -> {
+            FontSizeChangerFormDialog dialog = new FontSizeChangerFormDialog(this, table);
+            dialog.setVisible(true);
+        });
 
         // Привязываем элементы к вкладке -Файл-
         fileMenu.add(saveItem);
         fileMenu.add(loadItem);
+
+        // Привязываем элементы к вкладке -Настройки-
+        settingsMenu.add(fontSizeItem);
 
         // Привязываем элементы к вкладке -?-
         whatMenu.add(aboutAuthorItem);
 
         // Привязываем вкладки к панели меню
         menuBar.add(fileMenu);
+        menuBar.add(settingsMenu);
         menuBar.add(whatMenu);
         return menuBar;
     }
