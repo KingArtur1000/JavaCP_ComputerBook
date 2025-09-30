@@ -31,7 +31,8 @@ public class Computer extends Equipment {
 
     @Override
     public String serialize() {
-        return super.serialize() + DELIMITER +
+        return  getType() + DELIMITER +
+                super.serialize() + DELIMITER +
                 cpu + DELIMITER +
                 ram + DELIMITER +
                 storage;

@@ -22,7 +22,9 @@ public class Peripheral extends Equipment {
 
     @Override
     public String serialize() {
-        return super.serialize() + DELIMITER + type;
+        return  getType() + DELIMITER +
+                super.serialize() + DELIMITER +
+                type;
     }
 
 }

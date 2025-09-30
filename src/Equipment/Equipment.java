@@ -11,7 +11,7 @@ public abstract class Equipment {
     protected String description;
 
 
-    protected enum EQ_TYPES {
+    public enum EQ_TYPES {
         COMPUTER,
         PERIPHERAL,
         NETWORK_DEVICE
@@ -42,7 +42,7 @@ public abstract class Equipment {
     protected abstract EQ_TYPES getType();
 
     public String serialize() {
-        return name + DELIMITER +
+        return  name + DELIMITER +
                 manufacturer + DELIMITER +
                 price + DELIMITER +
                 year + DELIMITER +

@@ -27,7 +27,8 @@ public class NetworkDevice extends Equipment {
 
     @Override
     public String serialize() {
-        return super.serialize() + DELIMITER +
+        return  getType() + DELIMITER +
+                super.serialize() + DELIMITER +
                 protocol + DELIMITER +
                 speedMbps;
     }

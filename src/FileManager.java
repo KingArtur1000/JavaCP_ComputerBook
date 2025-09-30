@@ -1,5 +1,6 @@
 import Equipment.*;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +38,32 @@ public class FileManager {
     private static Equipment deserialize(String line) {
         try {
             String[] parts = line.split(DELIMITER);
-            String name = parts[0];
-            String manufacturer = parts[1];
-            double price = Double.parseDouble(parts[2]);
-            int year = Integer.parseInt(parts[3]);
-            String description = parts[4];
+            Equipment.EQ_TYPES eq_type = Equipment.EQ_TYPES.valueOf(parts[0]);
+            String name = parts[1];
+            String manufacturer = parts[2];
+            double price = Double.parseDouble(parts[3]);
+            int year = Integer.parseInt(parts[4]);
+            String description = parts[5];
+
+            switch (eq_type) {
+                case COMPUTER -> {
+                    String cpu = parts[6];
+                    int ram = Integer.parseInt(parts[7]);
+                    int storage =  Integer.parseInt(parts[8]);
+                    return new Computer(name, manufacturer, price, year, description, cpu, ram, storage);
+                }
+                case PERIPHERAL -> {
+                    String peripheralType = parts[6];
+                    return new Peripheral(name, manufacturer, price, year, description, peripheralType);
+                }
+                case NETWORK_DEVICE -> {
+                    String protocol = parts[6];
+                    int speed = Integer.parseInt(parts[7]);
+                    return new NetworkDevice(name, manufacturer, price, year, description, protocol, speed);
+                }
+                default -> { System.out.println("Неизвестный тип устройства!" + eq_type); }
+            }
+
             return new Peripheral(name, manufacturer, price, year, description, "Generic");
         } catch (Exception e) {
             return null;
