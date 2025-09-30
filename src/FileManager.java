@@ -44,12 +44,11 @@ public class FileManager {
     private static Equipment deserialize(String line) {
         try {
             String[] parts = line.split(DELIMITER);
-            int id = Integer.parseInt(parts[0]);
-            String name = parts[1];
-            String manufacturer = parts[2];
-            double price = Double.parseDouble(parts[3]);
-            int year = Integer.parseInt(parts[4]);
-            String description = parts[5];
+            String name = parts[0];
+            String manufacturer = parts[1];
+            double price = Double.parseDouble(parts[2]);
+            int year = Integer.parseInt(parts[3]);
+            String description = parts[4];
             return new Peripheral(name, manufacturer, price, year, description, "Generic");
         } catch (Exception e) {
             return null;
