@@ -13,7 +13,7 @@ public class FileManager {
     public static void saveCatalog(EquipmentCatalog catalog, File file) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (Equipment eq : catalog.getAll()) {
-                writer.write(serialize(eq));
+                writer.write(eq.serialize());
                 writer.newLine();
             }
         }
@@ -33,13 +33,6 @@ public class FileManager {
         return list;
     }
 
-    private static String serialize(Equipment eq) {
-        return  eq.getName() + DELIMITER +
-                eq.getManufacturer() + DELIMITER +
-                eq.getPrice() + DELIMITER +
-                eq.getYear() + DELIMITER +
-                eq.getDescription();
-    }
 
     private static Equipment deserialize(String line) {
         try {

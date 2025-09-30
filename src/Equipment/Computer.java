@@ -23,4 +23,13 @@ public class Computer extends Equipment {
     public void setCpu(String cpu) { this.cpu = cpu; }
     public void setRam(int ram) { this.ram = ram; }
     public void setStorage(int storage) { this.storage = storage; }
+
+    @Override
+    public String serialize() {
+        return super.serialize() + DELIMITER +
+                cpu + DELIMITER +
+                ram + DELIMITER +
+                storage;
+    }
+
 }

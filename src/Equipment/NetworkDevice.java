@@ -20,4 +20,12 @@ public class NetworkDevice extends Equipment {
     public void setProtocol(String protocol) { this.protocol = protocol; }
     public void setSpeedMbps(int speedMbps) {this.speedMbps = speedMbps; }
 
+    @Override
+    public String serialize() {
+        return super.serialize() + DELIMITER +
+                protocol + DELIMITER +
+                speedMbps;
+    }
+
+
 }

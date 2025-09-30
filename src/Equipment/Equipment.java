@@ -10,6 +10,8 @@ public abstract class Equipment {
     protected int year;
     protected String description;
 
+    protected static final String DELIMITER = ";";
+
     public Equipment(String name, String manufacturer, double price, int year, String description) {
         this.name = name;
         this.manufacturer = manufacturer;
@@ -27,5 +29,13 @@ public abstract class Equipment {
     @Override
     public String toString() {
         return name + " (" + manufacturer + ")";
+    }
+
+    public String serialize() {
+        return name + DELIMITER +
+                manufacturer + DELIMITER +
+                price + DELIMITER +
+                year + DELIMITER +
+                description;
     }
 }
