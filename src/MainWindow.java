@@ -1,6 +1,7 @@
 import Equipment.*;
 import UI.EquipmentFormDialog;
 import UI.FontSizeChangerFormDialog;
+import Utils.FontShortcutManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -52,6 +53,8 @@ public class MainWindow extends JFrame {
         table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
         table.setFont(new Font("Arial", Font.PLAIN, 16));
 
+        // Привязываемся к обработчику комбинаций горячих клавиш
+        new FontShortcutManager(table);
 
         // Добавляем возможность сортировки по столбцам
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
