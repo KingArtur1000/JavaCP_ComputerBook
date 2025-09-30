@@ -53,14 +53,15 @@ public class MainWindow extends JFrame {
         table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
         table.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        // Привязываемся к обработчику комбинаций горячих клавиш
-        new FontShortcutManager(table);
-
         // Добавляем возможность сортировки по столбцам
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
         table.setRowSorter(sorter);
 
         JScrollPane scrollPane = new JScrollPane(table);
+
+        // Привязываемся к обработчику комбинаций горячих клавиш
+        new FontShortcutManager(table, scrollPane);
+        table.requestFocusInWindow();
 
         JButton addButton = new JButton("Добавить");
         JButton removeButton = new JButton("Удалить");
@@ -166,7 +167,7 @@ public class MainWindow extends JFrame {
     private void onRemove(ActionEvent e) {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
-            String name = (String) tableModel.getValueAt(selectedRow, 0);
+            String name = (String) tableModel.getValueAt(selectedRow, 1);
             catalog.removeEquipmentByName(name);
             refreshTable();
         } else {
