@@ -50,11 +50,13 @@ public class EquipmentFormDialog extends JDialog {
         gbc.gridwidth = 1;  // Аналог ColumnSpan в WPF
         gbc.gridx = 0; gbc.gridy = row; // Положение ячейки в сетке (Аналог Grid.Column, Grid.Row)
         gbc.weightx = 0.15; // Аналог * в ColumnStraits в WPF (сколько места должен занимать столбец)
-        formPanel.add(new JLabel("Тип устройства:"), gbc);
+        JLabel typeLabel = new JLabel("Тип устройства:", SwingConstants.CENTER);
+        typeLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        formPanel.add(typeLabel, gbc);
 
         typeCombo = new JComboBox<>(new String[]{"Computer", "Peripheral", "NetworkDevice"});
         typeCombo.addActionListener(e -> updateDynamicFields());
-        typeCombo.setFont(new Font("Arial", Font.PLAIN, 14));
+        typeCombo.setFont(new Font("Arial", Font.BOLD, 14));
         typeCombo.setBackground(Color.WHITE);
         typeCombo.setForeground(Color.DARK_GRAY);
         typeCombo.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1, true));
