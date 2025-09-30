@@ -37,7 +37,7 @@ public class MainWindow extends JFrame {
         setJMenuBar(menuBar);
 
         String[] columns = {
-                "ID", "Название", "Производитель", "Цена", "Год", "Описание",
+                "Название", "Производитель", "Цена", "Год", "Описание",
                 "Тип", "CPU", "RAM", "Storage", "DeviceType", "Protocol", "Speed"
         };
 
@@ -101,24 +101,24 @@ public class MainWindow extends JFrame {
         tableModel.setRowCount(0);
         for (Equipment eq : catalog.getAll()) {
             Object[] row = new Object[13];
-            row[0] = eq.getId();
-            row[1] = eq.getName();
-            row[2] = eq.getManufacturer();
-            row[3] = eq.getPrice();
-            row[4] = eq.getYear();
-            row[5] = eq.getDescription();
-            row[6] = eq.getClass().getSimpleName(); // Computer / Peripheral / NetworkDevice
+            //row[0] = eq.getId();
+            row[0] = eq.getName();
+            row[1] = eq.getManufacturer();
+            row[2] = eq.getPrice();
+            row[3] = eq.getYear();
+            row[4] = eq.getDescription();
+            row[5] = eq.getClass().getSimpleName(); // Computer / Peripheral / NetworkDevice
 
             switch (eq) {
                 case Computer c -> {
-                    row[7] = c.getCpu();
-                    row[8] = c.getRam();
-                    row[9] = c.getStorage();
+                    row[6] = c.getCpu();
+                    row[7] = c.getRam();
+                    row[8] = c.getStorage();
                 }
-                case Peripheral p -> row[10] = p.getType();
+                case Peripheral p -> row[9] = p.getType();
                 case NetworkDevice n -> {
-                    row[11] = n.getProtocol();
-                    row[12] = n.getSpeedMbps();
+                    row[10] = n.getProtocol();
+                    row[11] = n.getSpeedMbps();
                 }
                 default -> {
                 }
@@ -143,8 +143,8 @@ public class MainWindow extends JFrame {
     private void onRemove(ActionEvent e) {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
-            int id = (int) tableModel.getValueAt(selectedRow, 0);
-            catalog.removeEquipment(id);
+            String name = (String) tableModel.getValueAt(selectedRow, 0);
+            catalog.removeEquipmentByName(name);
             refreshTable();
         } else {
             JOptionPane.showMessageDialog(this, "Выберите строку для удаления");

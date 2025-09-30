@@ -2,19 +2,20 @@ import Equipment.Equipment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Каталог оборудования. Хранит список и предоставляет методы управления.
  */
 public class EquipmentCatalog {
-    private List<Equipment> items = new ArrayList<>();
+    private final List<Equipment> items = new ArrayList<>();
 
     public void addEquipment(Equipment eq) {
         items.add(eq);
     }
 
-    public void removeEquipment(int id) {
-        items.removeIf(e -> e.getId() == id);
+    public void removeEquipmentByName(String name) {
+        items.removeIf(e -> Objects.equals(e.getName(), name));
     }
 
     public List<Equipment> findByName(String name) {

@@ -77,7 +77,7 @@ public class EquipmentFormDialog extends JDialog {
         descriptionField = addLabeledField(formPanel, gbc, row++, "Описание:");
 
         // Динамическая панель (Отступы будут разные, т.к. дин. панель не связана напрямую с gbc базовых полей);
-        // поэтому можно не пытаться подогнать Insets под базовые поля, и отступы считаются от самого объёмного label по тексту)
+        // поэтому можно не пытаться подогнать Insets под базовые поля, и отступы считаются от самого объёмного label по тексту
         dynamicPanel = new JPanel(new GridBagLayout());
         gbc.insets = new Insets(0, 0, 0, 0); // отступы
         gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
