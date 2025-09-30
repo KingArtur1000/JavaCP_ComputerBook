@@ -15,6 +15,10 @@ public class EquipmentFormDialog extends JDialog {
     private final List<JTextField> extraFields = new ArrayList<>();
     private Equipment result;
 
+    private final String typeComputerString = "Компьютер";
+    private final String typePeripheralString = "Периферия";
+    private final String typeNetworkDeviceString = "Сетевое устройство";
+
     public EquipmentFormDialog(JFrame parent) {
         super(parent, "Добавить оборудование", true);
 
@@ -54,7 +58,7 @@ public class EquipmentFormDialog extends JDialog {
         typeLabel.setFont(new Font("Arial", Font.BOLD, 14));
         formPanel.add(typeLabel, gbc);
 
-        typeCombo = new JComboBox<>(new String[]{"Computer", "Peripheral", "NetworkDevice"});
+        typeCombo = new JComboBox<>(new String[]{typeComputerString, typePeripheralString, typeNetworkDeviceString});
         typeCombo.addActionListener(e -> updateDynamicFields());
         typeCombo.setFont(new Font("Arial", Font.BOLD, 14));
         typeCombo.setBackground(Color.WHITE);
@@ -142,15 +146,15 @@ public class EquipmentFormDialog extends JDialog {
         String selectedType = (String) typeCombo.getSelectedItem();
 
         switch (selectedType) {
-            case "Computer":
-                addDynamicField("CPU:", row++, gbc);
-                addDynamicField("RAM (GB):", row++, gbc);
-                addDynamicField("Storage (GB):", row++, gbc);
+            case typeComputerString:
+                addDynamicField("Процессор (CPU):", row++, gbc);
+                addDynamicField("Оперативная память (RAM) (GB):", row++, gbc);
+                addDynamicField("Хранилище Storage (GB):", row++, gbc);
                 break;
-            case "Peripheral":
-                addDynamicField("Тип устройства:", row++, gbc);
+            case typePeripheralString:
+                addDynamicField("Тип:", row++, gbc);
                 break;
-            case "NetworkDevice":
+            case typeNetworkDeviceString:
                 addDynamicField("Протокол:", row++, gbc);
                 addDynamicField("Скорость (Mbps):", row++, gbc);
                 break;
@@ -194,17 +198,17 @@ public class EquipmentFormDialog extends JDialog {
             String selectedType = (String) typeCombo.getSelectedItem();
 
             switch (selectedType) {
-                case "Computer" -> {
+                case typeComputerString -> {
                     String cpu = extraFields.get(0).getText().trim();
                     int ram = Integer.parseInt(extraFields.get(1).getText().trim());
                     int storage = Integer.parseInt(extraFields.get(2).getText().trim());
                     result = new Computer(id, name, manufacturer, price, year, description, cpu, ram, storage);
                 }
-                case "Peripheral" -> {
+                case typePeripheralString -> {
                     String type = extraFields.getFirst().getText().trim();
                     result = new Peripheral(id, name, manufacturer, price, year, description, type);
                 }
-                case "NetworkDevice" -> {
+                case typeNetworkDeviceString -> {
                     String protocol = extraFields.get(0).getText().trim();
                     int speed = Integer.parseInt(extraFields.get(1).getText().trim());
                     result = new NetworkDevice(id, name, manufacturer, price, year, description, protocol, speed);
