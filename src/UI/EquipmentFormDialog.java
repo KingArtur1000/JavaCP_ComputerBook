@@ -150,7 +150,7 @@ public class EquipmentFormDialog extends JDialog {
             case typeComputerString:
                 addDynamicField("Процессор (CPU):", row++, gbc);
                 addDynamicField("Оперативная память (RAM) (GB):", row++, gbc);
-                addDynamicField("Хранилище Storage (GB):", row++, gbc);
+                addDynamicField("Хранилище (GB):", row++, gbc);
                 break;
             case typePeripheralString:
                 addDynamicField("Тип:", row++, gbc);

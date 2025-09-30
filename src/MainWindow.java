@@ -29,6 +29,9 @@ public class MainWindow extends JFrame {
         initUI();
     }
 
+    /**
+     * Инициализация UI
+     * */
     private void initUI() {
         // Создание объектов меню
         JMenuBar menuBar = getBar();
@@ -37,8 +40,8 @@ public class MainWindow extends JFrame {
         setJMenuBar(menuBar);
 
         String[] columns = {
-                "Название", "Производитель", "Цена", "Год", "Описание",
-                "Тип", "CPU", "RAM", "Storage", "DeviceType", "Protocol", "Speed"
+                "Тип устройства", "Название", "Производитель", "Цена", "Год", "Описание",
+                "Процессор", "RAM", "Хранилище", "Тип периферии", "Протокол", "Скорость (Mb/s)"
         };
 
         tableModel = new DefaultTableModel(columns, 0);
@@ -101,12 +104,12 @@ public class MainWindow extends JFrame {
         tableModel.setRowCount(0);
         for (Equipment eq : catalog.getAll()) {
             Object[] row = new Object[13];
-            row[0] = eq.getName();
-            row[1] = eq.getManufacturer();
-            row[2] = eq.getPrice();
-            row[3] = eq.getYear();
-            row[4] = eq.getDescription();
-            row[5] = eq.getClass().getSimpleName(); // Computer / Peripheral / NetworkDevice
+            row[0] = eq.getClass().getSimpleName(); // Computer / Peripheral / NetworkDevice
+            row[1] = eq.getName();
+            row[2] = eq.getManufacturer();
+            row[3] = eq.getPrice();
+            row[4] = eq.getYear();
+            row[5] = eq.getDescription();
 
             switch (eq) {
                 case Computer c -> {
