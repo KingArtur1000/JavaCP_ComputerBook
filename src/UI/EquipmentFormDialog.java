@@ -118,6 +118,8 @@ public class EquipmentFormDialog extends JDialog {
     }
 
     private void styleButton(JButton button, Color bg) {
+        button.setBorderPainted(false);
+        button.setOpaque(true);
         button.setBackground(bg);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
