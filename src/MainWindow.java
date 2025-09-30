@@ -101,7 +101,6 @@ public class MainWindow extends JFrame {
         tableModel.setRowCount(0);
         for (Equipment eq : catalog.getAll()) {
             Object[] row = new Object[13];
-            //row[0] = eq.getId();
             row[0] = eq.getName();
             row[1] = eq.getManufacturer();
             row[2] = eq.getPrice();
