@@ -64,14 +64,31 @@ public class MainWindow extends JFrame {
         table.requestFocusInWindow();
 
         JButton addButton = new JButton("Добавить");
+        addButton.setToolTipText("Выводит окно для добавления компьютерного оборудования");
+        addButton.setBackground(new Color(95, 212, 124));
+        addButton.setForeground(new Color(255, 255, 255));
         JButton removeButton = new JButton("Удалить");
+        removeButton.setToolTipText("Удаляет выбранную запись");
+        removeButton.setBackground(new Color(216, 53, 53));
+        removeButton.setForeground(new Color(255, 255, 255));
+        JButton exitButton = new JButton("Выход");
+        exitButton.setToolTipText("Выходит из программы");
+        exitButton.setBackground(new Color(255, 0, 0));
+        exitButton.setForeground(new Color(255, 255, 255));
+
 
         addButton.addActionListener(this::onAdd);
         removeButton.addActionListener(this::onRemove);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(addButton);
-        buttonPanel.add(removeButton);
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+
+        JPanel centerBottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centerBottomPanel.add(addButton);
+        centerBottomPanel.add(removeButton);
+
+        buttonPanel.add(centerBottomPanel, BorderLayout.CENTER);
+        buttonPanel.add(exitButton, BorderLayout.EAST);
+
 
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
