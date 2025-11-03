@@ -79,6 +79,20 @@ public class MainWindow extends JFrame {
 
         addButton.addActionListener(this::onAdd);
         removeButton.addActionListener(this::onRemove);
+        exitButton.addActionListener(e -> {
+            int result = JOptionPane.showConfirmDialog(
+                    this,                                   // родительское окно
+                    "Вы действительно хотите выйти?",       // сообщение
+                    "Подтверждение выхода",                 // заголовок
+                    JOptionPane.YES_NO_OPTION,              // кнопки
+                    JOptionPane.QUESTION_MESSAGE            // иконка
+            );
+
+            if (result == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        });
+
 
         JPanel buttonPanel = new JPanel(new BorderLayout());
 
