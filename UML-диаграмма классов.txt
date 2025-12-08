@@ -1,0 +1,95 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam backgroundColor white
+skinparam class {
+    BackgroundColor lightyellow
+    BorderColor black
+    ArrowColor black
+}
+
+' Основная иерархия Equipment
+abstract class Equipment {
+    # name: String
+    # manufacturer: String
+    # price: double
+    # year: int
+    # description: String
+    --
+    + {abstract} getType(): EQ_TYPES
+    + serialize(): String
+}
+
+enum EQ_TYPES {
+    COMPUTER
+    PERIPHERAL
+    NETWORK_DEVICE
+}
+
+class Computer {
+    - cpu: String
+    - ram: int
+    - storage: int
+}
+
+class Peripheral {
+    - type: String
+}
+
+class NetworkDevice {
+    - protocol: String
+    - speedMbps: int
+}
+
+' Основные классы
+class EquipmentCatalog {
+    - items: List<Equipment>
+    --
+    + addEquipment()
+    + removeEquipmentByName()
+    + findByName()
+    + getAll()
+}
+
+class FileManager <<static>> {
+    + saveCatalog()
+    + loadCatalog()
+}
+
+class MainWindow {
+    - catalog: EquipmentCatalog
+    - table: JTable
+    --
+    + main()
+}
+
+class EquipmentFormDialog {
+    - result: Equipment
+    --
+    + getResult()
+}
+
+class FontSizeChangerFormDialog {
+    + applyFontSize()
+}
+
+class FontShortcutManager {
+    - table: JTable
+    - scrollPane: JScrollPane
+}
+
+' Связи
+Equipment <|-- Computer
+Equipment <|-- Peripheral
+Equipment <|-- NetworkDevice
+Equipment +-- EQ_TYPES
+
+EquipmentCatalog o-- Equipment
+MainWindow *-- EquipmentCatalog
+MainWindow ..> EquipmentFormDialog : creates
+MainWindow ..> FontSizeChangerFormDialog : creates
+MainWindow ..> FontShortcutManager : uses
+MainWindow ..> FileManager : uses
+EquipmentFormDialog ..> Equipment : creates
+FileManager ..> EquipmentCatalog
+FileManager ..> Equipment
+@enduml
