@@ -259,7 +259,7 @@ public class MainWindow extends JFrame {
         // отдельный поток
         new Thread(() -> {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             } catch (InterruptedException ignored) {}
             SwingUtilities.invokeLater(() -> {
                 splash.dispose();
