@@ -8,17 +8,54 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Диалоговое окно {@code EquipmentFormDialog} для добавления нового оборудования.
+ * <p>
+ * Позволяет пользователю ввести базовые характеристики (название, производитель, цена, год, описание)
+ * и дополнительные параметры в зависимости от выбранного типа устройства:
+ * <ul>
+ *     <li>{@link Equipment.EQ_TYPES#COMPUTER} — процессор, RAM, хранилище</li>
+ *     <li>{@link Equipment.EQ_TYPES#PERIPHERAL} — тип периферии</li>
+ *     <li>{@link Equipment.EQ_TYPES#NETWORK_DEVICE} — протокол, скорость</li>
+ * </ul>
+ * После подтверждения создаётся соответствующий объект оборудования.
+ */
 public class EquipmentFormDialog extends JDialog {
-    private JTextField nameField, manufacturerField, priceField, yearField, descriptionField;
+    /** Поле для ввода названия оборудования. */
+    private JTextField nameField;
+    /** Поле для ввода производителя. */
+    private JTextField manufacturerField;
+    /** Поле для ввода цены. */
+    private JTextField priceField;
+    /** Поле для ввода года выпуска. */
+    private JTextField yearField;
+    /** Поле для ввода описания. */
+    private JTextField descriptionField;
+
+    /** Выпадающий список для выбора типа устройства. */
     private JComboBox<String> typeCombo;
+
+    /** Панель для динамически добавляемых полей. */
     private JPanel dynamicPanel;
+
+    /** Список дополнительных полей, зависящих от выбранного типа устройства. */
     private final List<JTextField> extraFields = new ArrayList<>();
+
+    /** Результат — созданный объект оборудования. */
     private Equipment result;
 
+    /** Строковое представление типа "Компьютер". */
     private final String typeComputerString = "Компьютер";
+    /** Строковое представление типа "Периферия". */
     private final String typePeripheralString = "Периферия";
+    /** Строковое представление типа "Сетевое устройство". */
     private final String typeNetworkDeviceString = "Сетевое устройство";
 
+    /**
+     * Конструктор диалогового окна для добавления оборудования.
+     *
+     * @param parent родительское окно
+     */
     public EquipmentFormDialog(JFrame parent) {
         super(parent, "Добавить оборудование", true);
 
@@ -26,12 +63,14 @@ public class EquipmentFormDialog extends JDialog {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) {}
 
-        // Параметры окна с добавлением оборудования
         setSize(400, 500);
         setLocationRelativeTo(parent);
         initForm();
     }
 
+    /**
+     * Инициализация формы: создание базовых полей, панели для динамических полей и кнопок.
+     */
     private void initForm() {
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -102,6 +141,15 @@ public class EquipmentFormDialog extends JDialog {
         updateDynamicFields();
     }
 
+    /**
+     * Добавляет пару "метка + текстовое поле" в форму.
+     *
+     * @param panel панель, куда добавляется поле
+     * @param gbc   настройки GridBagLayout
+     * @param row   номер строки
+     * @param label текст метки
+     * @return созданное текстовое поле
+     */
     private JTextField addLabeledField(JPanel panel, GridBagConstraints gbc, int row, String label) {
         JLabel lbl = new JLabel(label);
         lbl.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -116,6 +164,11 @@ public class EquipmentFormDialog extends JDialog {
         return field;
     }
 
+    /**
+     * Применяет стиль к текстовому полю.
+     *
+     * @param field текстовое поле
+     */
     private void styleTextField(JTextField field) {
         field.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.GRAY, 1, true),
@@ -124,6 +177,12 @@ public class EquipmentFormDialog extends JDialog {
         field.setFont(new Font("Arial", Font.PLAIN, 13));
     }
 
+    /**
+     * Применяет стиль к кнопке.
+     *
+     * @param button кнопка
+     * @param bg     цвет фона
+     */
     private void styleButton(JButton button, Color bg) {
         button.setBorderPainted(false);
         button.setOpaque(true);
@@ -134,6 +193,9 @@ public class EquipmentFormDialog extends JDialog {
         button.setPreferredSize(new Dimension(100, 30));
     }
 
+    /**
+     * Обновляет динамические поля в зависимости от выбранного типа устройства.
+     */
     private void updateDynamicFields() {
         dynamicPanel.removeAll();
         extraFields.clear();
@@ -172,6 +234,13 @@ public class EquipmentFormDialog extends JDialog {
         //pack();
     }
 
+    /**
+     * Добавляет динамическое поле (метка + текстовое поле).
+     *
+     * @param label текст метки
+     * @param row   номер строки
+     * @param gbc   настройки GridBagLayout
+     */
     private void addDynamicField(String label, int row, GridBagConstraints gbc) {
         JLabel lbl = new JLabel(label);
         lbl.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -188,6 +257,14 @@ public class EquipmentFormDialog extends JDialog {
         extraFields.add(field);
     }
 
+    /**
+     * Обработчик кнопки "OK".
+     * <p>
+     * Считывает введённые данные, создаёт объект оборудования соответствующего типа
+     * и закрывает диалог.
+     *
+     * @param e событие нажатия кнопки
+     */
     private void onOk(ActionEvent e) {
         try {
             String name = nameField.getText().trim();
@@ -224,6 +301,11 @@ public class EquipmentFormDialog extends JDialog {
         }
     }
 
+    /**
+     * Возвращает созданный объект оборудования.
+     *
+     * @return объект {@link Equipment}, либо {@code null}, если ввод был отменён
+     */
     public Equipment getResult() {
         return result;
     }
