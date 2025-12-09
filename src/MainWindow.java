@@ -72,9 +72,7 @@ public class MainWindow extends JFrame {
         removeButton.setBackground(new Color(216, 53, 53));
         removeButton.setForeground(new Color(255, 255, 255));
         JButton exitButton = new JButton("Выход");
-        exitButton.setToolTipText("Выходит из программы");
-        exitButton.setBackground(new Color(255, 0, 0));
-        exitButton.setForeground(new Color(255, 255, 255));
+        exitButton.setToolTipText("Выйти из программы");
 
 
         addButton.addActionListener(this::onAdd);
@@ -255,10 +253,20 @@ public class MainWindow extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            EquipmentCatalog catalog = new EquipmentCatalog();
-            MainWindow window = new MainWindow(catalog);
-            window.setVisible(true);
-        });
+        SplashScreenWindow splash = new SplashScreenWindow();
+        splash.setVisible(true);
+
+        // отдельный поток
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException ignored) {}
+            SwingUtilities.invokeLater(() -> {
+                splash.dispose();
+                EquipmentCatalog catalog = new EquipmentCatalog();
+                MainWindow window = new MainWindow(catalog);
+                window.setVisible(true);
+            });
+        }).start();
     }
 }
