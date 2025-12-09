@@ -11,16 +11,33 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 
 /**
- * Главное окно приложения "Каталог компьютерной техники".
+ * Главное окно приложения {@code "Каталог компьютерной техники"}.
+ * <p>
+ * Отвечает за отображение таблицы оборудования, меню управления и кнопок действий.
+ * Поддерживает:
+ * <ul>
+ *     <li>Добавление нового оборудования</li>
+ *     <li>Удаление выбранного оборудования</li>
+ *     <li>Сохранение и загрузку каталога из CSV-файла</li>
+ *     <li>Изменение размера шрифта таблицы</li>
+ *     <li>Отображение информации об авторе</li>
+ * </ul>
  *
- * @Author: N.S. Pavlovskiy
- *
+ * @author N.S. Pavlovskiy
  */
 public class MainWindow extends JFrame {
+    /** Каталог оборудования. */
     private EquipmentCatalog catalog;
+    /** Таблица для отображения оборудования. */
     private JTable table;
+    /** Модель таблицы. */
     private DefaultTableModel tableModel;
 
+    /**
+     * Конструктор главного окна.
+     *
+     * @param catalog каталог оборудования
+     */
     public MainWindow(EquipmentCatalog catalog) {
         this.catalog = catalog;
         setTitle("Каталог компьютерной техники");
@@ -32,8 +49,13 @@ public class MainWindow extends JFrame {
     }
 
     /**
-     * Инициализация UI
-     * */
+     * Инициализация пользовательского интерфейса:
+     * <ul>
+     *     <li>Создание меню</li>
+     *     <li>Настройка таблицы</li>
+     *     <li>Добавление кнопок управления</li>
+     * </ul>
+     */
     private void initUI() {
         // Создание объектов меню
         JMenuBar menuBar = getBar();
@@ -109,6 +131,11 @@ public class MainWindow extends JFrame {
         refreshTable();
     }
 
+    /**
+     * Создаёт меню приложения.
+     *
+     * @return панель меню {@link JMenuBar}
+     */
     private JMenuBar getBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Файл");
@@ -151,6 +178,9 @@ public class MainWindow extends JFrame {
         return menuBar;
     }
 
+    /**
+     * Обновляет содержимое таблицы на основе текущего каталога.
+     */
     private void refreshTable() {
         tableModel.setRowCount(0);
         for (Equipment eq : catalog.getAll()) {
@@ -182,6 +212,11 @@ public class MainWindow extends JFrame {
     }
 
 
+    /**
+     * Обработчик кнопки "Добавить".
+     *
+     * @param e событие
+     */
     private void onAdd(ActionEvent e) {
         EquipmentFormDialog dialog = new EquipmentFormDialog(this);
         dialog.setVisible(true);
@@ -193,6 +228,11 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * Обработчик кнопки "Удалить".
+     *
+     * @param e событие
+     */
     private void onRemove(ActionEvent e) {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
@@ -216,6 +256,9 @@ public class MainWindow extends JFrame {
     }
 
 
+    /**
+     * Сохраняет каталог в CSV-файл.
+     */
     private void onSave() {
         JFileChooser chooser = new JFileChooser();
 
@@ -232,6 +275,9 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * Загружает каталог из CSV-файла.
+     */
     private void onLoad() {
         JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -248,10 +294,21 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /**
+     * Отображает информацию об авторе.
+     */
     public void onClickAboutAuthorItem() {
         JOptionPane.showMessageDialog(this, "Автор: Павловский Никита Сергеевич - студент БНТУ :)");
     }
 
+    /**
+     * Точка входа в приложение.
+     * <p>
+     * Отображает заставку {@link SplashScreenWindow}, затем через 5 секунд
+     * закрывает её и открывает главное окно {@link MainWindow}.
+     *
+     * @param args аргументы командной строки (не используются)
+     */
     public static void main(String[] args) {
         SplashScreenWindow splash = new SplashScreenWindow();
         splash.setVisible(true);
