@@ -5,9 +5,22 @@ import java.awt.*;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.JTableHeader;
 
+/**
+ * Диалоговое окно {@code FontSizeChangerFormDialog} для изменения размера шрифта в таблице {@link JTable}.
+ * <p>
+ * Позволяет пользователю выбрать размер шрифта с помощью ползунка (от 10 до 30, по умолчанию 16).
+ * Изменения применяются сразу к таблице и её заголовку.
+ */
 public class FontSizeChangerFormDialog extends JDialog {
+    /** Ползунок для выбора размера шрифта. */
     private JSlider slider;
 
+    /**
+     * Конструктор диалогового окна изменения размера шрифта.
+     *
+     * @param parent родительское окно
+     * @param table  таблица, к которой будет применяться выбранный размер шрифта
+     */
     public FontSizeChangerFormDialog(JFrame parent, JTable table) {
         super(parent, "Изменение размера шрифта", true);
 
@@ -28,9 +41,12 @@ public class FontSizeChangerFormDialog extends JDialog {
         };
         slider.addChangeListener(listener);
 
+        // Заголовок
         add(new JLabel("Выберите размер шрифта:", SwingConstants.CENTER), BorderLayout.NORTH);
+        // Ползунок
         add(slider, BorderLayout.CENTER);
 
+        // Кнопка закрытия
         JButton closeButton = new JButton("Закрыть");
         closeButton.addActionListener(e -> dispose());
         JPanel buttonPanel = new JPanel();
@@ -38,7 +54,16 @@ public class FontSizeChangerFormDialog extends JDialog {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    /** Метод для применения размера шрифта к таблице */
+    /**
+     * Применяет выбранный размер шрифта к таблице и её заголовку.
+     * <p>
+     * - Шрифт таблицы устанавливается как {@code Arial, PLAIN, size}.<br>
+     * - Шрифт заголовка устанавливается как {@code Arial, BOLD, size}.<br>
+     * - Высота строки увеличивается на 8 пикселей, чтобы текст не обрезался.
+     *
+     * @param table таблица, к которой применяется размер шрифта
+     * @param size  размер шрифта
+     */
     public static void applyFontSize(JTable table, int size) {
         table.setFont(new Font("Arial", Font.PLAIN, size));
         JTableHeader header = table.getTableHeader();
