@@ -309,6 +309,7 @@ public class MainWindow extends JFrame {
         JLabel label = new JLabel("Автор: Павловский Никита Сергеевич; гр. 10702423", authorIcon, JLabel.CENTER);
         label.setHorizontalTextPosition(JLabel.CENTER);
         label.setVerticalTextPosition(JLabel.BOTTOM);
+        label.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         // Показываем диалог
         JOptionPane.showMessageDialog(this, label, "Об авторе", JOptionPane.INFORMATION_MESSAGE);
