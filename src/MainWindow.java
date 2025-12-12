@@ -333,14 +333,14 @@ public class MainWindow extends JFrame {
         // отдельный поток
         new Thread(() -> {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(60000); // 60 секунд
             } catch (InterruptedException ignored) {}
+
             SwingUtilities.invokeLater(() -> {
-                splash.dispose();
-                EquipmentCatalog catalog = new EquipmentCatalog();
-                MainWindow window = new MainWindow(catalog);
-                window.setVisible(true);
+                splash.dispose();       // закрываем splash
+                System.exit(0);         // завершаем программу
             });
         }).start();
     }
+
 }
