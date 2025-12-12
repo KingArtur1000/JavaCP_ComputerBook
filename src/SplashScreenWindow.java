@@ -9,8 +9,8 @@ public class SplashScreenWindow extends JWindow {
         mainPanel.setBackground(Color.WHITE);
 
         // Левая часть: картинка
-        ImageIcon icon = new ImageIcon(getClass().getResource("images/logo.png")); // путь к картинке
-        Image scaledImage = icon.getImage().getScaledInstance(350, 500, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(getClass().getResource("images/logo.jpg")); // путь к картинке
+        Image scaledImage = icon.getImage().getScaledInstance(350, 400, Image.SCALE_SMOOTH);
         JLabel imageLabel = new JLabel(new ImageIcon(scaledImage));
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         mainPanel.add(imageLabel, BorderLayout.WEST);
