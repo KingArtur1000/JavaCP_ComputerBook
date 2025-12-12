@@ -297,9 +297,25 @@ public class MainWindow extends JFrame {
     /**
      * Отображает информацию об авторе.
      */
-    public void onClickAboutAuthorItem() {
-        JOptionPane.showMessageDialog(this, "Автор: Павловский Никита Сергеевич - студент БНТУ :)");
+    private void onClickAboutAuthorItem() {
+        // Загружаем оригинальную картинку
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("images/author.jpg"));
+
+        // Масштабируем до нужного размера (например, 150x150)
+        Image scaledImage = originalIcon.getImage().getScaledInstance(300, 450, Image.SCALE_SMOOTH);
+        ImageIcon authorIcon = new ImageIcon(scaledImage);
+
+        // Создаём метку с картинкой и текстом
+        JLabel label = new JLabel("Автор: Павловский Никита Сергеевич; гр. 10702423", authorIcon, JLabel.CENTER);
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
+
+        // Показываем диалог
+        JOptionPane.showMessageDialog(this, label, "Об авторе", JOptionPane.INFORMATION_MESSAGE);
     }
+
+
+
 
     /**
      * Точка входа в приложение.

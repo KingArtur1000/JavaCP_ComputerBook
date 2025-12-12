@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JavaCP_ComputerBook:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JavaCP_ComputerBook_jar</output-path>
+    <root id="archive" name="JavaCP_ComputerBook.jar">
+      <element id="module-output" name="JavaCP_ComputerBook" />
+    </root>
+  </artifact>
+</component>
